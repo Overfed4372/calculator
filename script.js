@@ -21,8 +21,13 @@ digitsButton.forEach ( (element) => {
         let buttonValue = pressed.target.textContent;
         //Check if there is a number before the operand, then let the operand be inserted
         let opEval= new Operation ().stringEval(displayValue);
-        if (typeof +opEval[0] === "number" && opEval.length < 2)
+        if (typeof +opEval[0] === "number" && opEval.length < 2) {
             displayRow1.textContent += " " + buttonValue + " ";
+        } else if (opEval.length == 3 && typeof +opEval[0] === "number" && 
+        opEval[1].search(/[+-/*]/) !== -1 && typeof +opEval[2] === "number") {
+            digitEqual.click();
+            displayRow1.textContent += " " + buttonValue + " ";
+        }
     })
 });
 clearButton.addEventListener ('click' , () => {
