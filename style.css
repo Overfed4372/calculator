@@ -11,7 +11,7 @@ body {
     box-sizing: border-box;
     width: 330px;
     padding: 5px;
-    background-color: dimgray;
+    background-color:aqua;
     /* height: 500px;  */
     display: flex;
     flex-wrap: wrap;

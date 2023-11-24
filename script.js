@@ -21,10 +21,13 @@ digitsButton.forEach ( (element) => {
         let buttonValue = pressed.target.textContent;
         //Check if there is a number before the operand, then let the operand be inserted
         let opEval= new Operation ().stringEval(displayValue);
-        if (typeof +opEval[0] === "number" && opEval.length < 2) {
+        if (opEval[0] !== '' && opEval.length === 1) {
             displayRow1.textContent += " " + buttonValue + " ";
-        } else if (opEval.length == 3 && typeof +opEval[0] === "number" && 
-        opEval[1].search(/[+-/*]/) !== -1 && typeof +opEval[2] === "number") {
+            console.log('first');
+            console.log(parseInt(opEval[0]) !== NaN);
+        } else if (opEval.length === 3 && parseInt(opEval[0]) !== NaN && 
+        opEval[1].search(/[+-/*]/) !== -1 && parseInt(opEval[2]) !== NaN) {
+            console.log('second');
             digitEqual.click();
             displayRow1.textContent += " " + buttonValue + " ";
         }
@@ -62,8 +65,8 @@ function Operation () {
     this.calculate = function (string) {
         let opArr , op , n1 , n2;
         opArr = this.stringEval(string);
-        if (opArr.length == 3 && typeof +opArr[0] === "number" && 
-            opArr[1].search(/[+-/*]/) !== -1 && typeof +opArr[2] === "number") {
+        if (opArr.length == 3 && parseInt(opArr[0]) !== NaN && 
+            opArr[1].search(/[+-/*]/) !== -1 && parseInt(opArr[2]) !== NaN) {
             n1 = +opArr[0]; op = opArr[1]; n2 = +opArr[2];
             return this.operators[op](n1 , n2);
         }
