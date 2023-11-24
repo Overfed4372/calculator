@@ -7,55 +7,70 @@ const displayRow2 = document.querySelector(".display .row2");
 const clearButton = document.querySelector(".clear");
 const digitEqual = document.querySelector(".digit-equal");
 
-//Adding the same event listener to both numbers and digits button for altering display 
-numbersButton.concat(digitsButton).forEach ( (element) => {
+//Adding the same event listener to both numbers and digits button for altering the display
+numbersButton.forEach ( (element) => {
     element.addEventListener ('click' , (pressed) => {
+        // let buttonValue = pressed.target.textContent;
+        displayRow1.textContent += pressed.target.textContent;
+
+    })
+});
+digitsButton.forEach ( (element) => {
+    element.addEventListener ('click' , (pressed) => {
+        let displayValue = displayRow1.textContent;
         let buttonValue = pressed.target.textContent;
-        if (buttonValue.search(/[+-/*]/) !== -1) {
-            displayRow1.textContent += " " + pressed.target.textContent + " ";
-        } else {
-            displayRow1.textContent += pressed.target.textContent;
-        }
+        //Check if there is a number before the operand, then let the operand be inserted
+        let opEval= new Operation ().stringEval(displayValue);
+        if (typeof +opEval[0] === "number" && opEval.length < 2)
+            displayRow1.textContent += " " + buttonValue + " ";
     })
 });
 clearButton.addEventListener ('click' , () => {
     displayRow1.textContent = "";
     displayRow2.textContent = "0";
 });
+
+// Click the equal button to do the calculation
 digitEqual.addEventListener ('click' , () => {
-    let calculation = new Operation () ;
     let operationStr = displayRow1.textContent;
-    displayRow2.textContent = calculation.calculate(operationStr);
+    let calculation = new Operation().calculate(operationStr) ;
+    if (calculation !== undefined) {
+        displayRow2.textContent = displayRow1.textContent;
+        displayRow1.textContent = calculation;
+    }
 });
 
 //Calculation construct
 function Operation () {
     this.add = function (n1 , n2) {
-        return n1 + n2;
+        return parseFloat( (n1 + n2).toFixed(6) );
     }
     this.substract = function (n1 , n2) {
-        return n1 - n2;
+        return parseFloat( (n1 - n2).toFixed(6) );
     }
     this.multiply = function (n1 , n2) {
-        return n1 * n2;
+        return parseFloat( (n1 * n2).toFixed(6) );
     }
     this.divide = function (n1 , n2) {
-        return n1 / n2;
+        return parseFloat ( (n1 / n2).toFixed(6) );
     }
     this.calculate = function (string) {
         let opArr , op , n1 , n2;
-        opArr = this.stringEval(string); 
-        n1 = +opArr[0]; op = opArr[1]; n2 = +opArr[2];
-        return this.operators[op](n1 , n2);
+        opArr = this.stringEval(string);
+        if (opArr.length == 3 && typeof +opArr[0] === "number" && 
+            opArr[1].search(/[+-/*]/) !== -1 && typeof +opArr[2] === "number") {
+            n1 = +opArr[0]; op = opArr[1]; n2 = +opArr[2];
+            return this.operators[op](n1 , n2);
+        }
     }
     this.stringEval = function (string) {
         return string.trimEnd().split (" ");
     }
     this.operators = {
-        '+' : this.add , 
-        '-' : this.substract , 
+        '+' : this.add ,
+        '-' : this.substract ,
         '*' : this.multiply ,
         '/' : this.divide ,
     }
-    
+
 }
