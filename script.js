@@ -12,7 +12,6 @@ numbersButton.forEach ( (element) => {
     element.addEventListener ('click' , (pressed) => {
         // let buttonValue = pressed.target.textContent;
         displayRow1.textContent += pressed.target.textContent;
-
     })
 });
 digitsButton.forEach ( (element) => {
@@ -21,16 +20,28 @@ digitsButton.forEach ( (element) => {
         let buttonValue = pressed.target.textContent;
         //Check if there is a number before the operand, then let the operand be inserted
         let opEval= new Operation ().stringEval(displayValue);
-        if (opEval[0] !== '' && opEval.length === 1) {
-            displayRow1.textContent += " " + buttonValue + " ";
-            console.log('first');
-            console.log(parseInt(opEval[0]) !== NaN);
-        } else if (opEval.length === 3 && parseInt(opEval[0]) !== NaN && 
-        opEval[1].search(/[+-/*]/) !== -1 && parseInt(opEval[2]) !== NaN) {
-            console.log('second');
-            digitEqual.click();
-            displayRow1.textContent += " " + buttonValue + " ";
-        }
+        //Check if button value is '.' , then see if there is not two of this character
+        if (buttonValue === '.') {
+            if (opEval.length === 3 && opEval[1].search(/[+-/*]/) !== -1 && !opEval[2].includes('.') ||
+                opEval.length === 2 && opEval[1].search(/[+-/*]/) !== -1 && opEval[2] === undefined) {
+                displayRow1.textContent += buttonValue;
+                console.log('hola');
+            } else if (opEval.length === 1 && !opEval[0].includes('.')) {
+                displayRow1.textContent += buttonValue;
+                console.log('hello');
+            }
+        } else {
+            if (opEval[0] !== '' && opEval.length === 1) {
+                displayRow1.textContent += " " + buttonValue + " ";
+                console.log('first');
+                console.log(parseInt(opEval[0]) !== NaN);
+            } else if (opEval.length === 3 && parseInt(opEval[0]) !== NaN && 
+            opEval[1].search(/[+-/*]/) !== -1 && parseInt(opEval[2]) !== NaN) {
+                console.log('second');
+                digitEqual.click();
+                displayRow1.textContent += " " + buttonValue + " ";
+            }
+        } 
     })
 });
 clearButton.addEventListener ('click' , () => {

@@ -19,7 +19,7 @@ body {
     align-items: center;
 }
 button {
-    font-size: 24px;
+    font-size: 32px;
     background-color:#217C7E;
     box-sizing: border-box;
     width: 80px;
@@ -51,4 +51,7 @@ button {
     justify-content: center;
     align-items: flex-start;
     flex-wrap: wrap;
+}
+.calculations #zero {
+    flex: 1 2 0;
 }
