@@ -23,9 +23,12 @@ button {
     box-sizing: border-box;
     width: 80px;
     height: 70px;
-    border: 0.5px solid;
+    border: 1px solid;
     border-radius: 0px;
     flex: 1 1 auto;
+}
+button:hover {
+    font-size: 38px;
 }
 .display {
     /* background-color:wheat; */
