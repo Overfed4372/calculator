@@ -3,9 +3,11 @@ const numbersButton = [...document.querySelectorAll(".number")];
 const digitsButton = [...document.querySelectorAll(".digit")];
 const displayRow1 = document.querySelector(".display .row1");
 const displayRow2 = document.querySelector(".display .row2");
-// const displayValue = display.textContent;
 const clearButton = document.querySelector(".clear");
 const digitEqual = document.querySelector(".digit-equal");
+//Selecting the most outer div -> container
+const container  = document.querySelector(".container");
+
 
 //Adding the same event listener to both numbers and digits button for altering the display
 numbersButton.forEach ( (element) => {
@@ -21,17 +23,19 @@ digitsButton.forEach ( (element) => {
         //Check if there is a number before the operand, then let the operand be inserted
         let opEval= new Operation ().stringEval(displayValue);
         //Check if button value is '.' , then see if there is not two of this character
-        if (buttonValue === `←`) {
+        if (buttonValue === `C`) {
             if (opEval.length === 1 && opEval[0] !== '' ||
                 opEval.length === 3 && opEval[2] !== '') {
                 displayRow1.textContent = displayValue.slice(0,-1);
             } 
         } else if (buttonValue === '.') {
-            if (opEval.length === 3 && opEval[1].search(/[+-/*]/) !== -1 && !opEval[2].includes('.') ||
-                opEval.length === 2 && opEval[1].search(/[+-/*]/) !== -1 && opEval[2] === undefined) {
+            if (opEval.length === 3 && opEval[1].search(/[+-/*]/) !== -1 && !opEval[2].includes('.') ) {
                 displayRow1.textContent += buttonValue;
-            } else if (opEval.length === 1 && !opEval[0].includes('.')) {
-                displayRow1.textContent += buttonValue;
+            } else if (opEval.length === 2 && opEval[1].search(/[+-/*]/) !== -1 && opEval[2] === undefined ) {
+                displayRow1.textContent += `0${buttonValue}`;
+            } 
+            else if (opEval.length === 1 && !opEval[0].includes('.')) {
+                displayRow1.textContent += `0${buttonValue}`;
             }
         } else {
             if (opEval[0] !== '' && opEval.length === 1) {
@@ -57,6 +61,22 @@ digitEqual.addEventListener ('click' , () => {
         displayRow2.textContent = displayRow1.textContent;
         displayRow1.textContent = calculation;
     }
+});
+
+//Keyboard functionality
+document.addEventListener("keydown" , (event) => {
+    let key = event.key;
+    let allNumsAndDigits = document.querySelectorAll(".calculations button");
+    let pressedButton;
+    key = (key === "Enter") ? "=" : key ;
+    function setOption(selectElement, value) {
+        return [...selectElement].find((element) => {
+            // console.log(option);
+            if (element.value === value) return element;
+        });
+    }
+    pressedButton = setOption(allNumsAndDigits , key);
+    if (pressedButton) pressedButton.click();
 });
 
 //Calculation construct
