@@ -55,3 +55,12 @@ button {
 .calculations #zero {
     flex: 1 2 0;
 }
+.number , .digit.dot {
+    background-color:#217C7E;
+}
+.digit , .digit-equal {
+    background-color:blueviolet;
+}
+.calculations .extras {
+    background-color: darksalmon;
+}

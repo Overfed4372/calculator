@@ -25,10 +25,8 @@ digitsButton.forEach ( (element) => {
             if (opEval.length === 3 && opEval[1].search(/[+-/*]/) !== -1 && !opEval[2].includes('.') ||
                 opEval.length === 2 && opEval[1].search(/[+-/*]/) !== -1 && opEval[2] === undefined) {
                 displayRow1.textContent += buttonValue;
-                console.log('hola');
             } else if (opEval.length === 1 && !opEval[0].includes('.')) {
                 displayRow1.textContent += buttonValue;
-                console.log('hello');
             }
         } else {
             if (opEval[0] !== '' && opEval.length === 1) {
