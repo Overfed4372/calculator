@@ -9,9 +9,9 @@ body {
 }
 .calculator-backbone {
     box-sizing: border-box;
-    width: 330px;
-    padding: 5px;
-    background-color:aqua;
+    width: 320px;
+    /* padding: 5px; */
+    background-color:#303030;
     /* height: 500px;  */
     display: flex;
     flex-wrap: wrap;
@@ -20,18 +20,19 @@ body {
 }
 button {
     font-size: 32px;
-    background-color:#217C7E;
     box-sizing: border-box;
     width: 80px;
     height: 70px;
-    border: 2px solid;
-    border-radius: 10px;
+    border: 0.5px solid;
+    border-radius: 0px;
+    flex: 1 1 auto;
 }
 .display {
-    background-color:wheat;
+    /* background-color:wheat; */
+    color: #FAFAFA;
     box-sizing: border-box;
     width: 320px;
-    border: 2px solid;
+    /* border: 2px solid; */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -53,14 +54,23 @@ button {
     flex-wrap: wrap;
 }
 .calculations #zero {
-    flex: 1 2 0;
+    flex: 2 1 auto;
+}
+.calculations .dot {
+    flex: 0 1 auto;
+}
+.calculations .digit-equal {
+    flex: 0 1 auto;
 }
 .number , .digit.dot {
-    background-color:#217C7E;
+    color: #FAFAFA;
+    background-color:#050505;
 }
 .digit , .digit-equal {
-    background-color:blueviolet;
+    color: #82A7B9;
+    background-color:#181C1D;
 }
 .calculations .extras {
-    background-color: darksalmon;
+    color: #82A7B9;
+    background-color: #181C1D;
 }
