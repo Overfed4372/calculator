@@ -21,7 +21,12 @@ digitsButton.forEach ( (element) => {
         //Check if there is a number before the operand, then let the operand be inserted
         let opEval= new Operation ().stringEval(displayValue);
         //Check if button value is '.' , then see if there is not two of this character
-        if (buttonValue === '.') {
+        if (buttonValue === `←`) {
+            if (opEval.length === 1 && opEval[0] !== '' ||
+                opEval.length === 3 && opEval[2] !== '') {
+                displayRow1.textContent = displayValue.slice(0,-1);
+            } 
+        } else if (buttonValue === '.') {
             if (opEval.length === 3 && opEval[1].search(/[+-/*]/) !== -1 && !opEval[2].includes('.') ||
                 opEval.length === 2 && opEval[1].search(/[+-/*]/) !== -1 && opEval[2] === undefined) {
                 displayRow1.textContent += buttonValue;
@@ -31,11 +36,8 @@ digitsButton.forEach ( (element) => {
         } else {
             if (opEval[0] !== '' && opEval.length === 1) {
                 displayRow1.textContent += " " + buttonValue + " ";
-                console.log('first');
-                console.log(parseInt(opEval[0]) !== NaN);
             } else if (opEval.length === 3 && parseInt(opEval[0]) !== NaN && 
             opEval[1].search(/[+-/*]/) !== -1 && parseInt(opEval[2]) !== NaN) {
-                console.log('second');
                 digitEqual.click();
                 displayRow1.textContent += " " + buttonValue + " ";
             }
